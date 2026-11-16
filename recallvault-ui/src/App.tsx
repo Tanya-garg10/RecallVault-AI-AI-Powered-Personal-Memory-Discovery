@@ -4,7 +4,12 @@ import { AppLayout } from './components/layout/AppLayout';
 import { ToastProvider } from './components/ui/toast';
 import { useToast } from './components/ui/toast-context';
 import { getConnectionStatus } from './lib/bridge';
+import { installMockBridge } from './lib/mockBridge';
 import type { ConnectionStatus } from './lib/types';
+
+if (typeof window !== 'undefined' && window.localStorage.getItem('recallvault-mock-nas') === '1') {
+  installMockBridge();
+}
 import { AboutPage } from './pages/AboutPage';
 import { CollectionDetailPage } from './pages/CollectionDetailPage';
 import { CollectionsPage } from './pages/CollectionsPage';

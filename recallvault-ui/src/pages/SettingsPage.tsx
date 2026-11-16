@@ -73,6 +73,31 @@ export function SettingsPage({ demoMode }: { demoMode: boolean }) {
           </div>
         </Panel>
 
+        <Panel title="Developer: simulated NAS bridge">
+          <p className="text-sm leading-7 text-muted">
+            A mock <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">window.ugreenRecallVault</code> bridge can exercise the live code path with synthetic host-shaped payloads. It is clearly labelled and never represents a real device.
+          </p>
+          <div className="mt-4 flex gap-3">
+            <button
+              type="button"
+              onClick={() => { window.localStorage.setItem('recallvault-mock-nas', '1'); window.location.reload(); }}
+              className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm font-bold text-amber-800 transition hover:bg-amber-100"
+            >
+              Enable simulated bridge
+            </button>
+            <button
+              type="button"
+              onClick={() => { window.localStorage.removeItem('recallvault-mock-nas'); window.location.reload(); }}
+              className="rounded-2xl border border-line bg-white px-4 py-2.5 text-sm font-bold text-muted transition hover:text-ink"
+            >
+              Disable
+            </button>
+          </div>
+          {effective.skillStatus.includes('mock') && (
+            <p className="mt-3 rounded-2xl bg-amber-50 px-4 py-3 text-xs font-semibold text-amber-800">Simulated bridge is currently active.</p>
+          )}
+        </Panel>
+
         <Panel title="Privacy & permissions">
           <p className="text-sm leading-7 text-muted">{effective.privacy}</p>
           <ul className="mt-4 space-y-2 text-sm text-muted">

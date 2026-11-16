@@ -48,15 +48,16 @@ function Nav() {
 }
 
 function StatusPill({ connection, demoMode }: { connection: ConnectionStatus; demoMode: boolean }) {
-  const live = connection.bridgeAvailable && !demoMode;
+  const simulated = connection.library.status === 'simulated';
+  const live = connection.bridgeAvailable && connection.nasConnected && !demoMode && !simulated;
   return (
     <NavLink
       to="/settings"
-      className={cn('hidden items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-bold transition sm:inline-flex', live ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-primary/20 bg-primary-soft text-primary-dark')}
+      className={cn('hidden items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-bold transition sm:inline-flex', live ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : simulated ? 'border-amber-200 bg-amber-50 text-amber-700' : 'border-primary/20 bg-primary-soft text-primary-dark')}
       title="NAS connection status"
     >
-      <span className={cn('h-2 w-2 rounded-full', live ? 'bg-emerald-500' : 'bg-secondary')} />
-      {live ? 'NAS connected' : 'Demo mode'}
+      <span className={cn('h-2 w-2 rounded-full', live ? 'bg-emerald-500' : simulated ? 'bg-amber-500' : 'bg-secondary')} />
+      {live ? 'NAS connected' : simulated ? 'Simulated bridge' : 'Demo mode'}
     </NavLink>
   );
 }
@@ -104,10 +105,12 @@ export function AppLayout({ connection, demoMode, onToggleDemo, children }: {
         </div>
       </header>
 
-      {demoMode && (
+      {(demoMode || connection.library.status === 'simulated') && (
         <div className="border-b border-primary/15 bg-primary-soft/70">
           <div className="mx-auto max-w-[1440px] px-5 py-2.5 text-[13px] font-medium text-primary-dark sm:px-8">
-            Demo mode — all memories shown are synthetic examples, not files from a UGREEN NAS.
+            {connection.library.status === 'simulated'
+              ? 'Simulated NAS bridge is active — responses are synthetic and shaped like host payloads. Not retrieved from a real UGREEN NAS.'
+              : 'Demo mode — all memories shown are synthetic examples, not files from a UGREEN NAS.'}
           </div>
         </div>
       )}
