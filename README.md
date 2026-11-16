@@ -8,8 +8,6 @@ RecallVault AI turns natural language into authorized, evidence-backed search ac
 
 > *"Find my college farewell photos from 2025."* — that's the whole interface.
 
----
-
 ## What it does
 
 | Capability | How it works |
@@ -111,7 +109,5 @@ Latest result: **`static-pass`** — 0 errors, 0 warnings (catalog v2.2.0).
 | `docs/testing.md` | Static checks, demo smoke tests, hardware test plan |
 | `docs/validation-report.md` | Latest validation results |
 | `recallvault-ai/references/` | Search workflow, evidence ranking, classification, privacy, test scenarios |
-
----
 
 **RecallVault AI** — built for the UGREEN Hackathon · *Bring Memories to Life*
